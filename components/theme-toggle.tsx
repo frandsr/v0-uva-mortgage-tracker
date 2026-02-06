@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
 interface ThemeToggleProps {
-  variant?: "default" | "menuItem"
+  variant?: "default" | "menuItem" | "compact"
 }
 
 export function ThemeToggle({ variant = "default" }: ThemeToggleProps) {
@@ -26,36 +26,44 @@ export function ThemeToggle({ variant = "default" }: ThemeToggleProps) {
     system: "Sistema",
   }
 
-  if (variant === "menuItem") {
+  if (variant === "menuItem" || variant === "compact") {
+    const buttons = (
+      <div className="flex items-center gap-1">
+        <Button
+          variant={theme === "light" ? "secondary" : "ghost"}
+          size="icon"
+          className="h-7 w-7"
+          onClick={() => setTheme("light")}
+        >
+          <Sun className="h-3.5 w-3.5" />
+        </Button>
+        <Button
+          variant={theme === "dark" ? "secondary" : "ghost"}
+          size="icon"
+          className="h-7 w-7"
+          onClick={() => setTheme("dark")}
+        >
+          <Moon className="h-3.5 w-3.5" />
+        </Button>
+        <Button
+          variant={theme === "system" ? "secondary" : "ghost"}
+          size="icon"
+          className="h-7 w-7"
+          onClick={() => setTheme("system")}
+        >
+          <Monitor className="h-3.5 w-3.5" />
+        </Button>
+      </div>
+    )
+
+    if (variant === "compact") {
+      return buttons
+    }
+
     return (
       <div className="flex items-center justify-between w-full px-2 py-1.5">
-        <span className="text-sm text-slate-300">Tema</span>
-        <div className="flex items-center gap-1">
-          <Button
-            variant={theme === "light" ? "secondary" : "ghost"}
-            size="icon"
-            className="h-7 w-7"
-            onClick={() => setTheme("light")}
-          >
-            <Sun className="h-3.5 w-3.5" />
-          </Button>
-          <Button
-            variant={theme === "dark" ? "secondary" : "ghost"}
-            size="icon"
-            className="h-7 w-7"
-            onClick={() => setTheme("dark")}
-          >
-            <Moon className="h-3.5 w-3.5" />
-          </Button>
-          <Button
-            variant={theme === "system" ? "secondary" : "ghost"}
-            size="icon"
-            className="h-7 w-7"
-            onClick={() => setTheme("system")}
-          >
-            <Monitor className="h-3.5 w-3.5" />
-          </Button>
-        </div>
+        <span className="text-sm text-muted-foreground">Tema</span>
+        {buttons}
       </div>
     )
   }
@@ -63,12 +71,12 @@ export function ThemeToggle({ variant = "default" }: ThemeToggleProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon" className="h-9 w-9 bg-transparent border-slate-700 text-slate-300 hover:bg-slate-800">
+        <Button variant="outline" size="icon" className="h-9 w-9">
           {icons[theme || "system"]}
           <span className="sr-only">Cambiar tema</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="bg-slate-800 border-slate-700">
+      <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme("light")}>
           <Sun className="mr-2 h-4 w-4" />
           Claro

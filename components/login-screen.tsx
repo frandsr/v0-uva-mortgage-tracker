@@ -27,14 +27,14 @@ export function LoginScreen() {
   ]
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
-      <header className="w-full border-b border-slate-800 bg-slate-900">
+      <header className="w-full border-b border-border dark:border-slate-800 bg-card dark:bg-slate-900">
         <div className="container mx-auto px-4 h-16 flex items-center gap-3">
           <div className="p-2 bg-emerald-500/10 rounded-lg">
             <Home className="h-5 w-5 text-emerald-500" />
           </div>
-          <span className="font-bold text-lg text-white">Mi Crédito UVA</span>
+          <span className="font-bold text-lg text-foreground">Mi Crédito UVA</span>
         </div>
       </header>
 
@@ -42,16 +42,16 @@ export function LoginScreen() {
       <main className="flex-1 container mx-auto px-4 py-12 flex flex-col lg:flex-row items-center justify-center gap-12">
         {/* Left side - Hero */}
         <div className="flex-1 max-w-xl space-y-6 text-center lg:text-left">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-sm font-medium">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-sm font-medium">
             <Home className="h-4 w-4" />
             Créditos hipotecarios UVA
           </div>
 
-          <h1 className="text-4xl lg:text-5xl font-bold tracking-tight text-white">
-            Controla tu crédito hipotecario <span className="text-emerald-400">UVA</span>
+          <h1 className="text-4xl lg:text-5xl font-bold tracking-tight text-foreground">
+            Controla tu crédito hipotecario <span className="text-emerald-600 dark:text-emerald-400">UVA</span>
           </h1>
 
-          <p className="text-lg text-slate-400">
+          <p className="text-lg text-muted-foreground">
             Lleva un registro detallado de tu préstamo hipotecario en UVA. Visualiza tu progreso, calcula cuotas en
             pesos y dólares, y mantén el control de tus finanzas.
           </p>
@@ -86,10 +86,10 @@ export function LoginScreen() {
         </div>
 
         {/* Right side - Features card */}
-        <Card className="w-full max-w-md shadow-xl bg-slate-900 border-slate-800">
+        <Card className="w-full max-w-md shadow-xl bg-card dark:bg-slate-900 border-border dark:border-slate-800">
           <CardHeader>
-            <CardTitle className="text-white">Funcionalidades</CardTitle>
-            <CardDescription className="text-slate-400">Todo lo que necesitas para gestionar tu crédito UVA</CardDescription>
+            <CardTitle className="text-foreground">Funcionalidades</CardTitle>
+            <CardDescription className="text-muted-foreground">Todo lo que necesitas para gestionar tu crédito UVA</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {features.map((feature, index) => (
@@ -98,8 +98,8 @@ export function LoginScreen() {
                   <feature.icon className="h-5 w-5 text-emerald-500" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-white">{feature.title}</h3>
-                  <p className="text-sm text-slate-400">{feature.description}</p>
+                  <h3 className="font-semibold text-foreground">{feature.title}</h3>
+                  <p className="text-sm text-muted-foreground">{feature.description}</p>
                 </div>
               </div>
             ))}
@@ -108,8 +108,8 @@ export function LoginScreen() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-800 bg-slate-900 py-6">
-        <div className="container mx-auto px-4 text-center text-sm text-slate-500">
+      <footer className="border-t border-border dark:border-slate-800 bg-card dark:bg-slate-900 py-6">
+        <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
           <p>Desarrollado para ayudarte a gestionar tu crédito hipotecario UVA en Argentina</p>
         </div>
       </footer>

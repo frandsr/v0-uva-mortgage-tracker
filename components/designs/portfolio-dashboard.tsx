@@ -38,8 +38,8 @@ export function PortfolioDashboard() {
 
   if (isLoading || !loanData || !rates || !loanConfig) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
-        <div className="animate-pulse text-slate-400">Cargando...</div>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="animate-pulse text-muted-foreground">Cargando...</div>
       </div>
     )
   }
@@ -80,37 +80,37 @@ export function PortfolioDashboard() {
   const paginatedPayments = amortizationSchedule.slice(startIndex, startIndex + PAYMENTS_PER_PAGE)
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
-      <header className="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-10">
+      <header className="border-b border-border dark:border-slate-800 bg-card/50 dark:bg-slate-900/50 backdrop-blur sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 py-2.5 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Activity className="w-4 h-4 text-emerald-500" />
             <span className="font-semibold text-sm">Mi Crédito</span>
-            <span className="text-xs text-slate-500 hidden sm:inline">• {bank?.name}</span>
+            <span className="text-xs text-muted-foreground hidden sm:inline">• {bank?.name}</span>
           </div>
 
           {/* Desktop */}
           <div className="hidden sm:flex items-center gap-2">
             <div className="flex items-center gap-2 text-xs">
-              <span className="text-slate-500">UVA</span>
-              <span className="text-emerald-400 font-medium">{formatCurrency(uva, "ARS")}</span>
+              <span className="text-muted-foreground">UVA</span>
+              <span className="text-emerald-600 dark:text-emerald-400 font-medium">{formatCurrency(uva, "ARS")}</span>
             </div>
             <Select value={dollarType} onValueChange={(v) => setDollarType(v as "oficial" | "blue")}>
-              <SelectTrigger className="w-24 h-7 bg-slate-800 border-slate-700 text-xs">
+              <SelectTrigger className="w-24 h-7 bg-muted dark:bg-slate-800 border-border dark:border-slate-700 text-xs">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="bg-slate-800 border-slate-700">
+              <SelectContent>
                 <SelectItem value="oficial">Oficial</SelectItem>
                 <SelectItem value="blue">Blue</SelectItem>
               </SelectContent>
             </Select>
-            <Button variant="ghost" size="icon" onClick={refetch} className="text-slate-400 hover:text-white h-7 w-7">
+            <Button variant="ghost" size="icon" onClick={refetch} className="text-muted-foreground hover:text-foreground h-7 w-7">
               <RefreshCw className="w-3 h-3" />
             </Button>
             <UserMenu />
             <ThemeToggle />
-            <Button variant="ghost" size="icon" onClick={openConfigModal} className="text-slate-400 hover:text-white h-7 w-7">
+            <Button variant="ghost" size="icon" onClick={openConfigModal} className="text-muted-foreground hover:text-foreground h-7 w-7">
               <Settings className="w-3 h-3" />
             </Button>
           </div>
@@ -120,31 +120,42 @@ export function PortfolioDashboard() {
             <UserMenu />
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400">
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground">
                   <Menu className="w-4 h-4" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="bg-slate-900 border-slate-800 w-64">
-                <div className="space-y-4 pt-4">
-                  <div className="text-sm">
-                    <p className="text-slate-500 mb-1">Cotizaciones</p>
-                    <p className="text-emerald-400">UVA {formatCurrency(uva, "ARS")}</p>
-                    <p className="text-emerald-400">USD {formatCurrency(dolarValue, "ARS")}</p>
+              <SheetContent side="right" title="Cotizaciones" className="bg-background dark:bg-slate-900 border-border dark:border-slate-800 w-72 p-0">
+                <div className="px-4 py-4 border-b border-border dark:border-slate-800 space-y-2">
+                  <h3 className="text-sm font-medium text-foreground">Cotizaciones</h3>
+                  <div className="space-y-1">
+                    <p className="text-emerald-600 dark:text-emerald-400 text-sm">UVA {formatCurrency(uva, "ARS")}</p>
+                    <p className="text-emerald-600 dark:text-emerald-400 text-sm">USD {formatCurrency(dolarValue, "ARS")}</p>
                   </div>
+                </div>
+
+                {/* Content */}
+                <div className="flex-1 px-4 py-4 space-y-3">
                   <Select value={dollarType} onValueChange={(v) => setDollarType(v as "oficial" | "blue")}>
-                    <SelectTrigger className="w-full bg-slate-800 border-slate-700">
+                    <SelectTrigger className="w-full">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-800 border-slate-700">
+                    <SelectContent>
                       <SelectItem value="oficial">USD Oficial</SelectItem>
                       <SelectItem value="blue">USD Blue</SelectItem>
                     </SelectContent>
                   </Select>
-                  <Button variant="outline" onClick={refetch} className="w-full border-slate-700">
+                  <Button variant="outline" onClick={refetch} className="w-full">
                     <RefreshCw className="w-4 h-4 mr-2" /> Actualizar
                   </Button>
-                  <ThemeToggle />
-                  <Button variant="outline" onClick={openConfigModal} className="w-full border-slate-700">
+                </div>
+
+                {/* Footer */}
+                <div className="px-4 py-4 border-t border-border dark:border-slate-800 space-y-3 mt-auto">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">Tema</span>
+                    <ThemeToggle variant="compact" />
+                  </div>
+                  <Button variant="outline" onClick={openConfigModal} className="w-full">
                     <Settings className="w-4 h-4 mr-2" /> Configurar
                   </Button>
                 </div>
@@ -156,13 +167,13 @@ export function PortfolioDashboard() {
 
       <main className="max-w-4xl mx-auto px-4 py-4 space-y-4">
         {/* Main Value Card */}
-        <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-4 border border-slate-800">
+        <div className="bg-gradient-to-br from-muted to-card dark:from-slate-800 dark:to-slate-900 rounded-xl p-4 border border-border dark:border-slate-800">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs text-slate-400">Cuota Mensual</span>
-            <span className="text-xs text-slate-500 sm:hidden">UVA {formatCurrency(uva, "ARS")}</span>
+            <span className="text-xs text-muted-foreground">Cuota Mensual</span>
+            <span className="text-xs text-muted-foreground sm:hidden">UVA {formatCurrency(uva, "ARS")}</span>
           </div>
-          <div className="text-2xl sm:text-3xl font-bold text-white mb-1">{formatCurrency(monthlyPaymentUVA * uva, "ARS")}</div>
-          <div className="flex items-center gap-3 text-xs text-slate-400">
+          <div className="text-2xl sm:text-3xl font-bold text-foreground mb-1">{formatCurrency(monthlyPaymentUVA * uva, "ARS")}</div>
+          <div className="flex items-center gap-3 text-xs text-muted-foreground">
             <span>{formatUVA(monthlyPaymentUVA)}</span>
             <span>{formatCurrency((monthlyPaymentUVA * uva) / dolarValue, "USD")}</span>
           </div>
@@ -202,20 +213,20 @@ export function PortfolioDashboard() {
         {/* Charts */}
         <div className="space-y-4">
           {/* Evolution Chart */}
-          <div className="bg-slate-900 rounded-xl p-4 border border-slate-800">
+          <div className="bg-card dark:bg-slate-900 rounded-xl p-4 border border-border dark:border-slate-800">
             <div className="flex items-center justify-between mb-3">
               <div>
                 <h3 className="font-semibold text-sm">Evolución del Préstamo</h3>
-                <p className="text-[10px] text-slate-500">Pagado vs Pendiente</p>
+                <p className="text-[10px] text-muted-foreground">Pagado vs Pendiente</p>
               </div>
               <div className="flex items-center gap-3 text-[10px]">
                 <div className="flex items-center gap-1">
                   <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                  <span className="text-slate-400">Pagado</span>
+                  <span className="text-muted-foreground">Pagado</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <div className="w-2 h-2 rounded-full bg-amber-500" />
-                  <span className="text-slate-400">Pendiente</span>
+                  <span className="text-muted-foreground">Pendiente</span>
                 </div>
               </div>
             </div>
@@ -247,10 +258,10 @@ export function PortfolioDashboard() {
           </div>
 
           {/* Composition Chart */}
-          <div className="bg-slate-900 rounded-xl p-4 border border-slate-800">
+          <div className="bg-card dark:bg-slate-900 rounded-xl p-4 border border-border dark:border-slate-800">
             <div className="mb-3">
               <h3 className="font-semibold text-sm">Composición de Cuota</h3>
-              <p className="text-[10px] text-slate-500">Capital vs Interés (UVA)</p>
+              <p className="text-[10px] text-muted-foreground">Capital vs Interés (UVA)</p>
             </div>
             <div className="h-36 sm:h-44">
               <ResponsiveContainer width="100%" height="100%">
@@ -272,31 +283,31 @@ export function PortfolioDashboard() {
         </div>
 
         {/* Loan Summary */}
-        <div className="bg-slate-900 rounded-xl p-4 border border-slate-800">
+        <div className="bg-card dark:bg-slate-900 rounded-xl p-4 border border-border dark:border-slate-800">
           <h3 className="font-semibold text-sm mb-3">Resumen del Préstamo</h3>
           <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs">
-            <div className="py-1.5 border-b border-slate-800">
-              <span className="text-slate-400">Monto Original</span>
+            <div className="py-1.5 border-b border-border dark:border-slate-800">
+              <span className="text-muted-foreground">Monto Original</span>
               <div className="font-medium">{formatCurrency(loanConfig.totalLoanUVA * uva, "ARS")}</div>
-              <div className="text-[10px] text-slate-500">{formatUVA(loanConfig.totalLoanUVA)} • {formatCurrency((loanConfig.totalLoanUVA * uva) / dolarValue, "USD")}</div>
+              <div className="text-[10px] text-muted-foreground">{formatUVA(loanConfig.totalLoanUVA)} • {formatCurrency((loanConfig.totalLoanUVA * uva) / dolarValue, "USD")}</div>
             </div>
-            <div className="flex justify-between py-1.5 border-b border-slate-800">
-              <span className="text-slate-400">Tasa Anual</span>
+            <div className="flex justify-between py-1.5 border-b border-border dark:border-slate-800">
+              <span className="text-muted-foreground">Tasa Anual</span>
               <span className="font-medium">{loanConfig.annualInterestRate}%</span>
             </div>
-            <div className="flex justify-between py-1.5 border-b border-slate-800">
-              <span className="text-slate-400">Fecha Inicio</span>
+            <div className="flex justify-between py-1.5 border-b border-border dark:border-slate-800">
+              <span className="text-muted-foreground">Fecha Inicio</span>
               <span className="font-medium">{new Date(startDate).toLocaleDateString("es-AR", { day: "2-digit", month: "short", year: "numeric" })}</span>
             </div>
-            <div className="flex justify-between py-1.5 border-b border-slate-800">
-              <span className="text-slate-400">Cuotas Pagadas</span>
-              <span className="font-medium text-emerald-400">{paidInstallments} / {totalInstallments}</span>
+            <div className="flex justify-between py-1.5 border-b border-border dark:border-slate-800">
+              <span className="text-muted-foreground">Cuotas Pagadas</span>
+              <span className="font-medium text-emerald-600 dark:text-emerald-400">{paidInstallments} / {totalInstallments}</span>
             </div>
           </div>
         </div>
 
         {/* Payment History */}
-        <div className="bg-slate-900 rounded-xl p-4 border border-slate-800">
+        <div className="bg-card dark:bg-slate-900 rounded-xl p-4 border border-border dark:border-slate-800">
           <div className="flex items-center justify-between mb-3">
             <h3 className="font-semibold text-sm">Historial de Pagos</h3>
             <div className="flex items-center gap-2">
@@ -305,11 +316,11 @@ export function PortfolioDashboard() {
                 size="icon"
                 onClick={() => setCurrentPage(p => Math.max(0, (p ?? activePage) - 1))}
                 disabled={activePage === 0}
-                className="h-7 w-7 text-slate-400 hover:text-white disabled:opacity-30"
+                className="h-7 w-7 text-muted-foreground hover:text-foreground disabled:opacity-30"
               >
                 <ChevronLeft className="w-4 h-4" />
               </Button>
-              <span className="text-[10px] text-slate-500 min-w-[60px] text-center">
+              <span className="text-[10px] text-muted-foreground min-w-[60px] text-center">
                 {startIndex + 1}-{Math.min(startIndex + PAYMENTS_PER_PAGE, totalInstallments)} de {totalInstallments}
               </span>
               <Button
@@ -317,7 +328,7 @@ export function PortfolioDashboard() {
                 size="icon"
                 onClick={() => setCurrentPage(p => Math.min(totalPages - 1, (p ?? activePage) + 1))}
                 disabled={activePage >= totalPages - 1}
-                className="h-7 w-7 text-slate-400 hover:text-white disabled:opacity-30"
+                className="h-7 w-7 text-muted-foreground hover:text-foreground disabled:opacity-30"
               >
                 <ChevronRight className="w-4 h-4" />
               </Button>
@@ -337,24 +348,24 @@ export function PortfolioDashboard() {
               const uvaToUse = historicalUva || uva
 
               return (
-                <div key={payment.month} className={`rounded-lg text-xs ${isNext ? "bg-slate-800/50 border border-emerald-800/50" : isPaid ? "bg-slate-800/30" : "bg-slate-800/20"}`}>
+                <div key={payment.month} className={`rounded-lg text-xs ${isNext ? "bg-muted/50 dark:bg-slate-800/50 border border-emerald-600/50 dark:border-emerald-800/50" : isPaid ? "bg-muted/30 dark:bg-slate-800/30" : "bg-muted/20 dark:bg-slate-800/20"}`}>
                   {/* Header row */}
                   <div className="flex items-center justify-between p-3 pb-2">
                     <div className="flex items-center gap-2">
-                      <div className={`w-7 h-7 rounded-full flex items-center justify-center ${isPaid ? "bg-emerald-900/50" : isNext ? "bg-emerald-600" : "bg-slate-700"}`}>
+                      <div className={`w-7 h-7 rounded-full flex items-center justify-center ${isPaid ? "bg-emerald-100 dark:bg-emerald-900/50" : isNext ? "bg-emerald-600" : "bg-muted dark:bg-slate-700"}`}>
                         {isPaid ? (
-                          <Check className="w-3.5 h-3.5 text-emerald-400" />
+                          <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                         ) : (
                           <span className="text-[10px] font-bold">{payment.month}</span>
                         )}
                       </div>
                       <div>
                         <div className="font-medium">Cuota {payment.month}</div>
-                        <div className="text-[10px] text-slate-500">{paymentDate.toLocaleDateString("es-AR", { day: "2-digit", month: "long", year: "numeric" })}</div>
+                        <div className="text-[10px] text-muted-foreground">{paymentDate.toLocaleDateString("es-AR", { day: "2-digit", month: "long", year: "numeric" })}</div>
                       </div>
                     </div>
                     {isLastPaid && (
-                      <Button size="sm" variant="ghost" onClick={unmarkPaymentAsPaid} className="h-7 w-7 p-0 text-slate-400 hover:text-amber-400">
+                      <Button size="sm" variant="ghost" onClick={unmarkPaymentAsPaid} className="h-7 w-7 p-0 text-muted-foreground hover:text-amber-500 dark:hover:text-amber-400">
                         <Check className="w-4 h-4" />
                       </Button>
                     )}
@@ -364,22 +375,22 @@ export function PortfolioDashboard() {
                   <div className="px-3 pb-3 space-y-2">
                     {/* Total */}
                     <div className="flex justify-between items-baseline">
-                      <span className="text-slate-400">Total</span>
+                      <span className="text-muted-foreground">Total</span>
                       <div className="text-right">
                         <span className="font-bold text-sm">{formatCurrency(payment.totalPayment * uvaToUse, "ARS")}</span>
-                        <div className="text-[10px] text-slate-500">{formatUVA(payment.totalPayment)} • {formatCurrency((payment.totalPayment * uvaToUse) / dolarValue, "USD")}</div>
+                        <div className="text-[10px] text-muted-foreground">{formatUVA(payment.totalPayment)} • {formatCurrency((payment.totalPayment * uvaToUse) / dolarValue, "USD")}</div>
                       </div>
                     </div>
 
                     {/* Capital & Interest breakdown */}
-                    <div className="grid grid-cols-2 gap-2 pt-1 border-t border-slate-700/50">
+                    <div className="grid grid-cols-2 gap-2 pt-1 border-t border-border/50 dark:border-slate-700/50">
                       <div className="flex justify-between">
-                        <span className="text-slate-500">Capital</span>
-                        <span className="text-emerald-400">{formatCurrency(payment.principal * uvaToUse, "ARS")}</span>
+                        <span className="text-muted-foreground">Capital</span>
+                        <span className="text-emerald-600 dark:text-emerald-400">{formatCurrency(payment.principal * uvaToUse, "ARS")}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-slate-500">Interés</span>
-                        <span className="text-rose-400">{formatCurrency(payment.interest * uvaToUse, "ARS")}</span>
+                        <span className="text-muted-foreground">Interés</span>
+                        <span className="text-rose-600 dark:text-rose-400">{formatCurrency(payment.interest * uvaToUse, "ARS")}</span>
                       </div>
                     </div>
 
@@ -413,17 +424,17 @@ function MetricCard({ label, value, uvaValue, usdValue, change, positive }: {
   positive?: boolean
 }) {
   return (
-    <div className="bg-slate-900 rounded-xl p-3 border border-slate-800">
-      <div className="text-[10px] text-slate-500 mb-1">{label}</div>
+    <div className="bg-card dark:bg-slate-900 rounded-xl p-3 border border-border dark:border-slate-800">
+      <div className="text-[10px] text-muted-foreground mb-1">{label}</div>
       <div className="text-base sm:text-lg font-bold truncate">{value}</div>
       {(uvaValue || usdValue) && (
         <div className="flex flex-col gap-0.5 mt-1">
-          {uvaValue && <div className="text-[10px] text-slate-400 truncate">{uvaValue}</div>}
-          {usdValue && <div className="text-[10px] text-slate-500 truncate">{usdValue}</div>}
+          {uvaValue && <div className="text-[10px] text-muted-foreground truncate">{uvaValue}</div>}
+          {usdValue && <div className="text-[10px] text-muted-foreground truncate">{usdValue}</div>}
         </div>
       )}
       {change !== undefined && (
-        <div className={`flex items-center gap-1 text-[10px] mt-1 ${positive ? "text-emerald-400" : "text-amber-400"}`}>
+        <div className={`flex items-center gap-1 text-[10px] mt-1 ${positive ? "text-emerald-600 dark:text-emerald-400" : "text-amber-600 dark:text-amber-400"}`}>
           {positive ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
           {change.toFixed(1)}%
         </div>
