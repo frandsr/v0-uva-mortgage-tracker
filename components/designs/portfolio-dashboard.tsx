@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer, CartesianGrid, Tooltip, BarChart, Bar, Legend } from "recharts"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { UserMenu } from "@/components/user-menu"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet"
 
 export function PortfolioDashboard() {
   const { loanData, rates, isLoading, refetch, paymentDay } = useLoanData()
@@ -128,7 +128,7 @@ export function PortfolioDashboard() {
                 <div className="flex flex-col h-full">
                   {/* Header */}
                   <div className="px-4 py-4 border-b border-slate-800">
-                    <h3 className="text-sm font-medium text-white">Cotizaciones</h3>
+                    <SheetTitle className="text-sm font-medium text-white">Cotizaciones</SheetTitle>
                     <div className="mt-2 space-y-1">
                       <p className="text-emerald-400 text-sm">UVA {formatCurrency(uva, "ARS")}</p>
                       <p className="text-emerald-400 text-sm">USD {formatCurrency(dolarValue, "ARS")}</p>
