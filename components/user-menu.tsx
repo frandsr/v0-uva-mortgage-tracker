@@ -48,15 +48,15 @@ export function UserMenu() {
           <Cloud className="w-4 h-4 text-emerald-500" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
+      <DropdownMenuContent align="end" className="w-56 bg-slate-800 border-slate-700">
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{user.user_metadata?.full_name || "Usuario"}</p>
-            <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+            <p className="text-sm font-medium leading-none text-white">{user.user_metadata?.full_name || "Usuario"}</p>
+            <p className="text-xs leading-none text-slate-400">{user.email}</p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-emerald-600">
+        <DropdownMenuItem className="text-emerald-400">
           <Cloud className="w-4 h-4 mr-2" />
           Datos sincronizados
         </DropdownMenuItem>
