@@ -19,20 +19,20 @@ export function DashboardHeader() {
   const selectedBank = BANKS.find((b) => b.id === loanConfig?.bank) || BANKS[0]
 
   return (
-    <header className="border-b border-border bg-card">
+    <header className="border-b border-slate-800 bg-slate-900">
       <div className="container mx-auto px-3 sm:px-4 py-3 flex items-center justify-between gap-2">
         {/* Logo y título - siempre visible */}
         <div className="flex items-center gap-2 min-w-0">
-          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary flex items-center justify-center shrink-0">
-            <Home className="w-4 h-4 text-primary-foreground" />
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0">
+            <Home className="w-4 h-4 text-emerald-500" />
           </div>
           <div className="min-w-0">
-            <h1 className="text-sm sm:text-base font-semibold text-foreground flex items-center gap-1.5">
+            <h1 className="text-sm sm:text-base font-semibold text-white flex items-center gap-1.5">
               <span className="hidden xs:inline">Mi Crédito UVA</span>
               <span className="xs:hidden">UVA</span>
               <span className="text-base sm:text-lg shrink-0">{selectedBank.logo}</span>
             </h1>
-            <p className="text-[11px] sm:text-xs text-muted-foreground truncate">{selectedBank.name}</p>
+            <p className="text-[11px] sm:text-xs text-slate-400 truncate">{selectedBank.name}</p>
           </div>
         </div>
 
@@ -40,7 +40,7 @@ export function DashboardHeader() {
         <div className="hidden md:flex items-center gap-2">
           <UserMenu />
           <ThemeToggle />
-          <Button variant="outline" size="sm" onClick={openConfigModal}>
+          <Button variant="outline" size="sm" onClick={openConfigModal} className="border-slate-700 text-slate-300 hover:bg-slate-800">
             <Settings className="w-4 h-4 mr-2" />
             Configurar
           </Button>
@@ -51,11 +51,11 @@ export function DashboardHeader() {
           <UserMenu />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="h-8 w-8">
+              <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-300 hover:bg-slate-800">
                 <Menu className="w-5 h-5" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-52">
+            <DropdownMenuContent align="end" className="w-52 bg-slate-800 border-slate-700">
               <ThemeToggle variant="menuItem" />
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={openConfigModal}>

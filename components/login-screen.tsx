@@ -27,14 +27,14 @@ export function LoginScreen() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950 flex flex-col">
+    <div className="min-h-screen bg-slate-950 flex flex-col">
       {/* Header */}
-      <header className="w-full border-b bg-background/80 backdrop-blur-sm">
+      <header className="w-full border-b border-slate-800 bg-slate-900">
         <div className="container mx-auto px-4 h-16 flex items-center gap-3">
-          <div className="p-2 bg-primary/10 rounded-lg">
-            <Home className="h-5 w-5 text-primary" />
+          <div className="p-2 bg-emerald-500/10 rounded-lg">
+            <Home className="h-5 w-5 text-emerald-500" />
           </div>
-          <span className="font-bold text-lg">UVA Mortgage Tracker</span>
+          <span className="font-bold text-lg text-white">Mi Crédito UVA</span>
         </div>
       </header>
 
@@ -42,22 +42,22 @@ export function LoginScreen() {
       <main className="flex-1 container mx-auto px-4 py-12 flex flex-col lg:flex-row items-center justify-center gap-12">
         {/* Left side - Hero */}
         <div className="flex-1 max-w-xl space-y-6 text-center lg:text-left">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-sm font-medium">
             <Home className="h-4 w-4" />
             Créditos hipotecarios UVA
           </div>
 
-          <h1 className="text-4xl lg:text-5xl font-bold tracking-tight text-foreground">
-            Controla tu crédito hipotecario <span className="text-primary">UVA</span>
+          <h1 className="text-4xl lg:text-5xl font-bold tracking-tight text-white">
+            Controla tu crédito hipotecario <span className="text-emerald-400">UVA</span>
           </h1>
 
-          <p className="text-lg text-muted-foreground">
+          <p className="text-lg text-slate-400">
             Lleva un registro detallado de tu préstamo hipotecario en UVA. Visualiza tu progreso, calcula cuotas en
             pesos y dólares, y mantén el control de tus finanzas.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-            <Button size="lg" onClick={signInWithGoogle} disabled={isLoading} className="gap-2">
+            <Button size="lg" onClick={signInWithGoogle} disabled={isLoading} className="gap-2 bg-emerald-600 hover:bg-emerald-700 text-white">
               {isLoading ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
               ) : (
@@ -86,20 +86,20 @@ export function LoginScreen() {
         </div>
 
         {/* Right side - Features card */}
-        <Card className="w-full max-w-md shadow-xl border-0 bg-background/80 backdrop-blur">
+        <Card className="w-full max-w-md shadow-xl bg-slate-900 border-slate-800">
           <CardHeader>
-            <CardTitle>Funcionalidades</CardTitle>
-            <CardDescription>Todo lo que necesitas para gestionar tu crédito UVA</CardDescription>
+            <CardTitle className="text-white">Funcionalidades</CardTitle>
+            <CardDescription className="text-slate-400">Todo lo que necesitas para gestionar tu crédito UVA</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {features.map((feature, index) => (
               <div key={index} className="flex gap-4">
-                <div className="p-2 h-fit rounded-lg bg-primary/10">
-                  <feature.icon className="h-5 w-5 text-primary" />
+                <div className="p-2 h-fit rounded-lg bg-emerald-500/10">
+                  <feature.icon className="h-5 w-5 text-emerald-500" />
                 </div>
                 <div>
-                  <h3 className="font-semibold">{feature.title}</h3>
-                  <p className="text-sm text-muted-foreground">{feature.description}</p>
+                  <h3 className="font-semibold text-white">{feature.title}</h3>
+                  <p className="text-sm text-slate-400">{feature.description}</p>
                 </div>
               </div>
             ))}
@@ -108,8 +108,8 @@ export function LoginScreen() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t bg-background/80 backdrop-blur-sm py-6">
-        <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
+      <footer className="border-t border-slate-800 bg-slate-900 py-6">
+        <div className="container mx-auto px-4 text-center text-sm text-slate-500">
           <p>Desarrollado para ayudarte a gestionar tu crédito hipotecario UVA en Argentina</p>
         </div>
       </footer>
