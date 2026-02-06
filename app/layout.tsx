@@ -6,6 +6,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { AuthProvider } from "@/components/auth-provider"
 import { SyncManager } from "@/components/sync-manager"
+import { ServiceWorkerProvider } from "@/components/service-worker-provider"
 
 import { Geist_Mono, Geist as V0_Font_Geist, Geist_Mono as V0_Font_Geist_Mono, Source_Serif_4 as V0_Font_Source_Serif_4 } from 'next/font/google'
 
@@ -18,12 +19,20 @@ export const metadata: Metadata = {
   title: "Mi Crédito UVA",
   description:
     "Gestiona y controla tu crédito hipotecario UVA. Seguimiento de cuotas, conversiones de moneda y más.",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Mi Crédito UVA",
+  },
+  formatDetection: {
+    telephone: false,
+  },
   icons: {
     icon: [
-      {
-        url: "/icon.svg",
-        type: "image/svg+xml",
-      },
+      { url: "/icons/icon-192x192.svg", sizes: "192x192", type: "image/svg+xml" },
+      { url: "/icons/icon-512x512.svg", sizes: "512x512", type: "image/svg+xml" },
+      { url: "/icon.svg", type: "image/svg+xml" },
     ],
     apple: "/icon.svg",
   },
@@ -33,6 +42,9 @@ export const viewport: Viewport = {
   themeColor: "#0f172a",
   width: "device-width",
   initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: "cover",
 }
 
 export default function RootLayout({
@@ -45,8 +57,10 @@ export default function RootLayout({
       <body className={`font-sans antialiased ${_geist.className}`}>
         <ThemeProvider>
           <AuthProvider>
-            <SyncManager />
-            {children}
+            <ServiceWorkerProvider>
+              <SyncManager />
+              {children}
+            </ServiceWorkerProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>

@@ -1,0 +1,17 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Full background for maskable (no rounded corners - system applies mask) -->
+  <rect width="512" height="512" fill="#020617"/>
+  <!-- Centered house with safe zone padding (10% = 51.2px on each side) -->
+  <g transform="translate(112, 128)">
+    <!-- House roof -->
+    <path d="M144 36L36 130H72V252H216V130H252L144 36Z" fill="#10b981"/>
+    <!-- Door -->
+    <rect x="120" y="158" width="48" height="94" rx="4" fill="#020617"/>
+    <!-- Window left -->
+    <rect x="84" y="144" width="30" height="30" rx="4" fill="#020617"/>
+    <!-- Window right -->
+    <rect x="174" y="144" width="30" height="30" rx="4" fill="#020617"/>
+    <!-- Chimney -->
+    <rect x="180" y="62" width="30" height="48" fill="#10b981"/>
+  </g>
+</svg>
