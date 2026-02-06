@@ -124,29 +124,43 @@ export function PortfolioDashboard() {
                   <Menu className="w-4 h-4" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="bg-slate-900 border-slate-800 w-64">
-                <div className="space-y-4 pt-4">
-                  <div className="text-sm">
-                    <p className="text-slate-500 mb-1">Cotizaciones</p>
-                    <p className="text-emerald-400">UVA {formatCurrency(uva, "ARS")}</p>
-                    <p className="text-emerald-400">USD {formatCurrency(dolarValue, "ARS")}</p>
+              <SheetContent side="right" className="bg-slate-900 border-slate-800 w-72 p-0">
+                <div className="flex flex-col h-full">
+                  {/* Header */}
+                  <div className="px-4 py-4 border-b border-slate-800">
+                    <h3 className="text-sm font-medium text-white">Cotizaciones</h3>
+                    <div className="mt-2 space-y-1">
+                      <p className="text-emerald-400 text-sm">UVA {formatCurrency(uva, "ARS")}</p>
+                      <p className="text-emerald-400 text-sm">USD {formatCurrency(dolarValue, "ARS")}</p>
+                    </div>
                   </div>
-                  <Select value={dollarType} onValueChange={(v) => setDollarType(v as "oficial" | "blue")}>
-                    <SelectTrigger className="w-full bg-slate-800 border-slate-700">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-slate-800 border-slate-700">
-                      <SelectItem value="oficial">USD Oficial</SelectItem>
-                      <SelectItem value="blue">USD Blue</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Button variant="outline" onClick={refetch} className="w-full border-slate-700">
-                    <RefreshCw className="w-4 h-4 mr-2" /> Actualizar
-                  </Button>
-                  <ThemeToggle />
-                  <Button variant="outline" onClick={openConfigModal} className="w-full border-slate-700">
-                    <Settings className="w-4 h-4 mr-2" /> Configurar
-                  </Button>
+
+                  {/* Content */}
+                  <div className="flex-1 px-4 py-4 space-y-3">
+                    <Select value={dollarType} onValueChange={(v) => setDollarType(v as "oficial" | "blue")}>
+                      <SelectTrigger className="w-full bg-slate-800 border-slate-700 text-slate-200">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="bg-slate-800 border-slate-700">
+                        <SelectItem value="oficial">USD Oficial</SelectItem>
+                        <SelectItem value="blue">USD Blue</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Button variant="outline" onClick={refetch} className="w-full border-slate-700 text-slate-200 hover:bg-slate-800">
+                      <RefreshCw className="w-4 h-4 mr-2" /> Actualizar
+                    </Button>
+                  </div>
+
+                  {/* Footer */}
+                  <div className="px-4 py-4 border-t border-slate-800 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-slate-400">Tema</span>
+                      <ThemeToggle variant="compact" />
+                    </div>
+                    <Button variant="outline" onClick={openConfigModal} className="w-full border-slate-700 text-slate-200 hover:bg-slate-800">
+                      <Settings className="w-4 h-4 mr-2" /> Configurar
+                    </Button>
+                  </div>
                 </div>
               </SheetContent>
             </Sheet>
