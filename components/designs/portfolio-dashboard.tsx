@@ -124,38 +124,38 @@ export function PortfolioDashboard() {
                   <Menu className="w-4 h-4" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" title="Cotizaciones" className="bg-slate-900 border-slate-800 w-72 p-0">
-                <div className="px-4 py-4 border-b border-slate-800 space-y-2">
-                  <h3 className="text-sm font-medium text-white">Cotizaciones</h3>
+              <SheetContent side="right" title="Cotizaciones" className="bg-background dark:bg-slate-900 border-border dark:border-slate-800 w-72 p-0">
+                <div className="px-4 py-4 border-b border-border dark:border-slate-800 space-y-2">
+                  <h3 className="text-sm font-medium text-foreground">Cotizaciones</h3>
                   <div className="space-y-1">
-                    <p className="text-emerald-400 text-sm">UVA {formatCurrency(uva, "ARS")}</p>
-                    <p className="text-emerald-400 text-sm">USD {formatCurrency(dolarValue, "ARS")}</p>
+                    <p className="text-emerald-600 dark:text-emerald-400 text-sm">UVA {formatCurrency(uva, "ARS")}</p>
+                    <p className="text-emerald-600 dark:text-emerald-400 text-sm">USD {formatCurrency(dolarValue, "ARS")}</p>
                   </div>
                 </div>
 
                 {/* Content */}
                 <div className="flex-1 px-4 py-4 space-y-3">
                   <Select value={dollarType} onValueChange={(v) => setDollarType(v as "oficial" | "blue")}>
-                    <SelectTrigger className="w-full bg-slate-800 border-slate-700 text-slate-200">
+                    <SelectTrigger className="w-full">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-800 border-slate-700">
+                    <SelectContent>
                       <SelectItem value="oficial">USD Oficial</SelectItem>
                       <SelectItem value="blue">USD Blue</SelectItem>
                     </SelectContent>
                   </Select>
-                  <Button variant="outline" onClick={refetch} className="w-full border-slate-700 text-slate-200 hover:bg-slate-800">
+                  <Button variant="outline" onClick={refetch} className="w-full">
                     <RefreshCw className="w-4 h-4 mr-2" /> Actualizar
                   </Button>
                 </div>
 
                 {/* Footer */}
-                <div className="px-4 py-4 border-t border-slate-800 space-y-3 mt-auto">
+                <div className="px-4 py-4 border-t border-border dark:border-slate-800 space-y-3 mt-auto">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-slate-400">Tema</span>
+                    <span className="text-sm text-muted-foreground">Tema</span>
                     <ThemeToggle variant="compact" />
                   </div>
-                  <Button variant="outline" onClick={openConfigModal} className="w-full border-slate-700 text-slate-200 hover:bg-slate-800">
+                  <Button variant="outline" onClick={openConfigModal} className="w-full">
                     <Settings className="w-4 h-4 mr-2" /> Configurar
                   </Button>
                 </div>
