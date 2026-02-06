@@ -62,7 +62,7 @@ export function ThemeToggle({ variant = "default" }: ThemeToggleProps) {
 
     return (
       <div className="flex items-center justify-between w-full px-2 py-1.5">
-        <span className="text-sm text-slate-300">Tema</span>
+        <span className="text-sm text-muted-foreground">Tema</span>
         {buttons}
       </div>
     )
@@ -71,12 +71,12 @@ export function ThemeToggle({ variant = "default" }: ThemeToggleProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon" className="h-9 w-9 bg-transparent border-slate-700 text-slate-300 hover:bg-slate-800">
+        <Button variant="outline" size="icon" className="h-9 w-9">
           {icons[theme || "system"]}
           <span className="sr-only">Cambiar tema</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="bg-slate-800 border-slate-700">
+      <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme("light")}>
           <Sun className="mr-2 h-4 w-4" />
           Claro
