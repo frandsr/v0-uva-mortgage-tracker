@@ -7,7 +7,12 @@ export function useServiceWorker() {
   const [updateAvailable, setUpdateAvailable] = useState(false)
 
   useEffect(() => {
-    if (typeof window === "undefined" || !("serviceWorker" in navigator)) {
+    // Only register service worker in production
+    if (
+      typeof window === "undefined" ||
+      !("serviceWorker" in navigator) ||
+      process.env.NODE_ENV !== "production"
+    ) {
       return
     }
 
