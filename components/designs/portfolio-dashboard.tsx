@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer, CartesianGrid, Tooltip, BarChart, Bar, Legend } from "recharts"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { UserMenu } from "@/components/user-menu"
-import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 export function PortfolioDashboard() {
   const { loanData, rates, isLoading, refetch, paymentDay } = useLoanData()
@@ -124,14 +124,14 @@ export function PortfolioDashboard() {
                   <Menu className="w-4 h-4" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="bg-slate-900 border-slate-800 w-72 p-0">
-                <SheetHeader className="px-4 py-4 border-b border-slate-800 gap-2">
-                  <SheetTitle className="text-sm font-medium text-white">Cotizaciones</SheetTitle>
+              <SheetContent side="right" title="Cotizaciones" className="bg-slate-900 border-slate-800 w-72 p-0">
+                <div className="px-4 py-4 border-b border-slate-800 space-y-2">
+                  <h3 className="text-sm font-medium text-white">Cotizaciones</h3>
                   <div className="space-y-1">
                     <p className="text-emerald-400 text-sm">UVA {formatCurrency(uva, "ARS")}</p>
                     <p className="text-emerald-400 text-sm">USD {formatCurrency(dolarValue, "ARS")}</p>
                   </div>
-                </SheetHeader>
+                </div>
 
                 {/* Content */}
                 <div className="flex-1 px-4 py-4 space-y-3">
