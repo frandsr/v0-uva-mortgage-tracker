@@ -121,6 +121,8 @@ export function PaymentHistory() {
 
                 // Calculate percentage change vs previous installment
                 let arsChangePercent: number | null = null
+                // Calculate percentage change vs first installment
+                let arsChangeSinceFirst: number | null = null
                 if (payment.month > 1) {
                   const prevPayment = amortizationSchedule[payment.month - 2]
                   const prevDate = new Date(startDate)
@@ -137,6 +139,22 @@ export function PaymentHistory() {
                   const prevTotalARS = prevPayment.totalPayment * prevUvaToUse
                   if (prevTotalARS > 0) {
                     arsChangePercent = ((totalARS - prevTotalARS) / prevTotalARS) * 100
+                  }
+
+                  const firstPayment = amortizationSchedule[0]
+                  const firstDate = new Date(startDate)
+                  firstDate.setDate(
+                    Math.min(
+                      configuredPaymentDay,
+                      new Date(firstDate.getFullYear(), firstDate.getMonth() + 1, 0).getDate(),
+                    ),
+                  )
+                  const firstIsInPast = firstDate <= today
+                  const firstHistoricalUva = firstIsInPast ? getUvaForDate(uvaHistory, firstDate, configuredPaymentDay) : null
+                  const firstUvaToUse = firstHistoricalUva || uva
+                  const firstTotalARS = firstPayment.totalPayment * firstUvaToUse
+                  if (firstTotalARS > 0) {
+                    arsChangeSinceFirst = ((totalARS - firstTotalARS) / firstTotalARS) * 100
                   }
                 }
 
@@ -180,8 +198,11 @@ export function PaymentHistory() {
                     </td>
                     <td className="py-3 px-4 text-sm text-right">
                       {arsChangePercent !== null ? (
-                        <span className={`font-medium ${arsChangePercent > 0 ? "text-rose-600 dark:text-rose-400" : arsChangePercent < 0 ? "text-emerald-600 dark:text-emerald-400" : "text-muted-foreground"}`}>
-                          {arsChangePercent > 0 ? "+" : ""}{arsChangePercent.toFixed(1)}%
+                        <span className="text-muted-foreground">
+                          <span className="font-medium">+{arsChangePercent.toFixed(1)}%</span>
+                          {arsChangeSinceFirst !== null && (
+                            <span className="ml-1 opacity-60 text-xs">(+{arsChangeSinceFirst.toFixed(0)}%)</span>
+                          )}
                         </span>
                       ) : (
                         <span className="text-muted-foreground">—</span>

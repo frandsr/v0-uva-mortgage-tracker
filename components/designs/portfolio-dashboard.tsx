@@ -350,6 +350,8 @@ export function PortfolioDashboard() {
 
               // Calculate percentage change vs previous installment
               let arsChangePercent: number | null = null
+              // Calculate percentage change vs first installment
+              let arsChangeSinceFirst: number | null = null
               if (payment.month > 1) {
                 const prevPayment = amortizationSchedule[payment.month - 2]
                 const prevDate = new Date(startDate)
@@ -360,6 +362,16 @@ export function PortfolioDashboard() {
                 const prevTotalARS = prevPayment.totalPayment * prevUvaToUse
                 if (prevTotalARS > 0) {
                   arsChangePercent = ((totalARS - prevTotalARS) / prevTotalARS) * 100
+                }
+
+                const firstPayment = amortizationSchedule[0]
+                const firstDate = new Date(startDate)
+                const firstIsInPast = firstDate <= today
+                const firstHistoricalUva = firstIsInPast ? getUvaForDate(uvaHistory, firstDate, configuredPaymentDay) : null
+                const firstUvaToUse = firstHistoricalUva || uva
+                const firstTotalARS = firstPayment.totalPayment * firstUvaToUse
+                if (firstTotalARS > 0) {
+                  arsChangeSinceFirst = ((totalARS - firstTotalARS) / firstTotalARS) * 100
                 }
               }
 
@@ -382,8 +394,11 @@ export function PortfolioDashboard() {
                     </div>
                     <div className="flex items-center gap-2">
                       {arsChangePercent !== null && (
-                        <span className={`text-[10px] font-medium ${arsChangePercent > 0 ? "text-rose-600 dark:text-rose-400" : arsChangePercent < 0 ? "text-emerald-600 dark:text-emerald-400" : "text-muted-foreground"}`}>
-                          {arsChangePercent > 0 ? "+" : ""}{arsChangePercent.toFixed(1)}%
+                        <span className="text-[10px] text-muted-foreground">
+                          <span className="font-medium">+{arsChangePercent.toFixed(1)}%</span>
+                          {arsChangeSinceFirst !== null && (
+                            <span className="ml-1 opacity-60">(+{arsChangeSinceFirst.toFixed(0)}% total)</span>
+                          )}
                         </span>
                       )}
                       {isLastPaid && (
