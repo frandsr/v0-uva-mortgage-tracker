@@ -346,6 +346,22 @@ export function PortfolioDashboard() {
               const isInPast = paymentDate <= today
               const historicalUva = isInPast ? getUvaForDate(uvaHistory, paymentDate, configuredPaymentDay) : null
               const uvaToUse = historicalUva || uva
+              const totalARS = payment.totalPayment * uvaToUse
+
+              // Calculate percentage change vs previous installment
+              let arsChangePercent: number | null = null
+              if (payment.month > 1) {
+                const prevPayment = amortizationSchedule[payment.month - 2]
+                const prevDate = new Date(startDate)
+                prevDate.setMonth(prevDate.getMonth() + prevPayment.month - 1)
+                const prevIsInPast = prevDate <= today
+                const prevHistoricalUva = prevIsInPast ? getUvaForDate(uvaHistory, prevDate, configuredPaymentDay) : null
+                const prevUvaToUse = prevHistoricalUva || uva
+                const prevTotalARS = prevPayment.totalPayment * prevUvaToUse
+                if (prevTotalARS > 0) {
+                  arsChangePercent = ((totalARS - prevTotalARS) / prevTotalARS) * 100
+                }
+              }
 
               return (
                 <div key={payment.month} className={`rounded-lg text-xs ${isNext ? "bg-muted/50 dark:bg-slate-800/50 border border-emerald-600/50 dark:border-emerald-800/50" : isPaid ? "bg-muted/30 dark:bg-slate-800/30" : "bg-muted/20 dark:bg-slate-800/20"}`}>
@@ -364,11 +380,18 @@ export function PortfolioDashboard() {
                         <div className="text-[10px] text-muted-foreground">{paymentDate.toLocaleDateString("es-AR", { day: "2-digit", month: "long", year: "numeric" })}</div>
                       </div>
                     </div>
-                    {isLastPaid && (
-                      <Button size="sm" variant="ghost" onClick={unmarkPaymentAsPaid} className="h-7 w-7 p-0 text-muted-foreground hover:text-amber-500 dark:hover:text-amber-400">
-                        <Check className="w-4 h-4" />
-                      </Button>
-                    )}
+                    <div className="flex items-center gap-2">
+                      {arsChangePercent !== null && (
+                        <span className={`text-[10px] font-medium ${arsChangePercent > 0 ? "text-rose-600 dark:text-rose-400" : arsChangePercent < 0 ? "text-emerald-600 dark:text-emerald-400" : "text-muted-foreground"}`}>
+                          {arsChangePercent > 0 ? "+" : ""}{arsChangePercent.toFixed(1)}%
+                        </span>
+                      )}
+                      {isLastPaid && (
+                        <Button size="sm" variant="ghost" onClick={unmarkPaymentAsPaid} className="h-7 w-7 p-0 text-muted-foreground hover:text-amber-500 dark:hover:text-amber-400">
+                          <Check className="w-4 h-4" />
+                        </Button>
+                      )}
+                    </div>
                   </div>
 
                   {/* Amount details */}
@@ -377,8 +400,8 @@ export function PortfolioDashboard() {
                     <div className="flex justify-between items-baseline">
                       <span className="text-muted-foreground">Total</span>
                       <div className="text-right">
-                        <span className="font-bold text-sm">{formatCurrency(payment.totalPayment * uvaToUse, "ARS")}</span>
-                        <div className="text-[10px] text-muted-foreground">{formatUVA(payment.totalPayment)} • {formatCurrency((payment.totalPayment * uvaToUse) / dolarValue, "USD")}</div>
+                        <span className="font-bold text-sm">{formatCurrency(totalARS, "ARS")}</span>
+                        <div className="text-[10px] text-muted-foreground">{formatUVA(payment.totalPayment)} • {formatCurrency(totalARS / dolarValue, "USD")}</div>
                       </div>
                     </div>
 
