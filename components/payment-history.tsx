@@ -92,6 +92,7 @@ export function PaymentHistory() {
                     </Tooltip>
                   </TooltipProvider>
                 </th>
+                <th className="text-right py-3 px-4 text-sm font-medium text-muted-foreground">Var. ARS</th>
                 <th className="text-center py-3 px-4 text-sm font-medium text-muted-foreground">Estado</th>
               </tr>
             </thead>
@@ -117,6 +118,27 @@ export function PaymentHistory() {
                 const uvaToUse = historicalUva || uva
                 const totalARS = payment.totalPayment * uvaToUse
                 const isHistorical = isInPast && historicalUva !== null
+
+                // Calculate percentage change vs previous installment
+                let arsChangePercent: number | null = null
+                if (payment.month > 1) {
+                  const prevPayment = amortizationSchedule[payment.month - 2]
+                  const prevDate = new Date(startDate)
+                  prevDate.setMonth(prevDate.getMonth() + prevPayment.month - 1)
+                  prevDate.setDate(
+                    Math.min(
+                      configuredPaymentDay,
+                      new Date(prevDate.getFullYear(), prevDate.getMonth() + 1, 0).getDate(),
+                    ),
+                  )
+                  const prevIsInPast = prevDate <= today
+                  const prevHistoricalUva = prevIsInPast ? getUvaForDate(uvaHistory, prevDate, configuredPaymentDay) : null
+                  const prevUvaToUse = prevHistoricalUva || uva
+                  const prevTotalARS = prevPayment.totalPayment * prevUvaToUse
+                  if (prevTotalARS > 0) {
+                    arsChangePercent = ((totalARS - prevTotalARS) / prevTotalARS) * 100
+                  }
+                }
 
                 return (
                   <tr
@@ -155,6 +177,15 @@ export function PaymentHistory() {
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
+                    </td>
+                    <td className="py-3 px-4 text-sm text-right">
+                      {arsChangePercent !== null ? (
+                        <span className={`font-medium ${arsChangePercent > 0 ? "text-rose-600 dark:text-rose-400" : arsChangePercent < 0 ? "text-emerald-600 dark:text-emerald-400" : "text-muted-foreground"}`}>
+                          {arsChangePercent > 0 ? "+" : ""}{arsChangePercent.toFixed(1)}%
+                        </span>
+                      ) : (
+                        <span className="text-muted-foreground">—</span>
+                      )}
                     </td>
                     <td className="py-3 px-4 text-center">
                       {isPaid ? (
